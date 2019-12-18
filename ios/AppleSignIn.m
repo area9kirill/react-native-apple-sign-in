@@ -31,12 +31,18 @@ RCT_EXPORT_MODULE()
             @"UNKNOWN": @(ASUserDetectionStatusUnknown),
             @"UNSUPPORTED": @(ASUserDetectionStatusUnsupported),
         };
+        NSDictionary* buttonTypes = @{
+            @"BLACK": @(ASAuthorizationAppleIDButtonStyleBlack),
+            @"WHITE": @(ASAuthorizationAppleIDButtonStyleWhite),
+            @"WHITE_OUTLINE": @(ASAuthorizationAppleIDButtonStyleWhiteOutline), 
+        };
 
         return @{
             @"Scope": scopes,
             @"Operation": operations,
             @"CredentialState": credentialStates,
-            @"UserDetectionStatus": userDetectionStatuses
+            @"UserDetectionStatus": userDetectionStatuses,
+            @"ButtonTypes": buttonTypes
         };
     }
 

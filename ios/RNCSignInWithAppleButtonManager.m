@@ -10,14 +10,16 @@
 
 RCT_EXPORT_MODULE(RNCSignInWithAppleButtonManager)
 
+RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(type, NSInteger)
+
 - (UIView *)view
 {
     if (@available(iOS 13.0, *)) {
-        return [[RNCSignInWithAppleButton alloc] initWithAuthorizationButtonType:ASAuthorizationAppleIDButtonTypeDefault authorizationButtonStyle:ASAuthorizationAppleIDButtonStyleBlack];
+        NSInteger *type = self.type ? self.type : ASAuthorizationAppleIDButtonStyleBlack;
+        return [[RNCSignInWithAppleButton alloc] initWithAuthorizationButtonType:ASAuthorizationAppleIDButtonTypeDefault authorizationButtonStyle:type];
     }
     return nil;
 }
-
-RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
 
 @end

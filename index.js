@@ -1,36 +1,83 @@
-import React from 'react'
-import { NativeModules, requireNativeComponent, Platform } from 'react-native'
+import React from "react";
+import { NativeModules, requireNativeComponent, Platform } from "react-native";
 
-const { AppleSignIn } = NativeModules
+const { AppleSignIn } = NativeModules;
 
-export const RNSignInWithAppleButton = requireNativeComponent('RNCSignInWithAppleButton')
+export const RNSignInWithAppleButton = requireNativeComponent(
+  "RNCSignInWithAppleButton"
+);
 
-const majorVersionIOS = parseInt(Platform.Version, 10)
+const majorVersionIOS = parseInt(Platform.Version, 10);
 
-const IS_SUPPORTED = Platform.OS === 'ios' && majorVersionIOS >= 13
+const IS_SUPPORTED = Platform.OS === "ios" && majorVersionIOS >= 13;
 
 export const SignInWithAppleButton = (buttonStyle, callBack) => {
   if (IS_SUPPORTED) {
-    return <RNSignInWithAppleButton style={ buttonStyle } onPress={ async () => {
-      await AppleSignIn.requestAsync({
-        requestedScopes: [AppleSignIn.Scope.FULL_NAME, AppleSignIn.Scope.EMAIL],
-      }).then((response) => {
-        callBack(response) //Display response
-      }, (error) => {
-        callBack(error) //Display error
-      })
-    } }/>
+    return (
+      <RNSignInWithAppleButton
+        style={buttonStyle}
+        onPress={async () => {
+          await AppleSignIn.requestAsync({
+            requestedScopes: [
+              AppleSignIn.Scope.FULL_NAME,
+              AppleSignIn.Scope.EMAIL
+            ]
+          }).then(
+            response => {
+              callBack(response); //Display response
+            },
+            error => {
+              callBack(error); //Display error
+            }
+          );
+        }}
+      />
+    );
   } else {
-    return null
+    return null;
   }
-}
+};
+
+export const SignInWithAppleButton2 = (buttonStyle, type, callBack) => {
+  if (IS_SUPPORTED) {
+    return (
+      <RNSignInWithAppleButton
+        type={type}
+        style={buttonStyle}
+        onPress={async () => {
+          await AppleSignIn.requestAsync({
+            requestedScopes: [
+              AppleSignIn.Scope.FULL_NAME,
+              AppleSignIn.Scope.EMAIL
+            ]
+          }).then(
+            response => {
+              callBack(response); //Display response
+            },
+            error => {
+              callBack(error); //Display error
+            }
+          );
+        }}
+      />
+    );
+  } else {
+    return null;
+  }
+};
 
 export const Scope = {
   FULL_NAME: IS_SUPPORTED ? AppleSignIn.Scope.FULL_NAME : null,
   EMAIL: IS_SUPPORTED ? AppleSignIn.Scope.EMAIL : null
-}
+};
+
+export const ButtonType = {
+  BLACK: IS_SUPPORTED ? AppleSignIn.ButtonTypes.BLACK : null,
+  WHITE: IS_SUPPORTED ? AppleSignIn.ButtonTypes.WHITE : null,
+  WHITE_OUTLINE: IS_SUPPORTED ? AppleSignIn.ButtonTypes.WHITE_OUTLINE : null
+};
 
 export default {
   request: IS_SUPPORTED ? AppleSignIn.requestAsync : null,
-  getCredentialState: IS_SUPPORTED ? AppleSignIn.getCredentialStateAsync : null,
-}
+  getCredentialState: IS_SUPPORTED ? AppleSignIn.getCredentialStateAsync : null
+};
