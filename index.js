@@ -3,67 +3,83 @@ import { NativeModules, requireNativeComponent, Platform } from "react-native";
 
 const { AppleSignIn } = NativeModules;
 
-export const RNSignInWithAppleButton = requireNativeComponent(
-  "RNCSignInWithAppleButton"
+export const RNSignInWithAppleWhiteButton = requireNativeComponent(
+  "RNCSignInWithAppleButtonWhite"
+);
+
+export const RNSignInWithAppleWhiteOutlineButton = requireNativeComponent(
+  "RNCSignInWithAppleButtonWhiteOutline"
+);
+
+export const RNSignInWithAppleBlackButton = requireNativeComponent(
+  "RNCSignInWithAppleButtonBlack"
 );
 
 const majorVersionIOS = parseInt(Platform.Version, 10);
 
 const IS_SUPPORTED = Platform.OS === "ios" && majorVersionIOS >= 13;
 
-export const SignInWithAppleButton = (buttonStyle, callBack) => {
-  if (IS_SUPPORTED) {
-    return (
-      <RNSignInWithAppleButton
-        style={buttonStyle}
-        onPress={async () => {
-          await AppleSignIn.requestAsync({
-            requestedScopes: [
-              AppleSignIn.Scope.FULL_NAME,
-              AppleSignIn.Scope.EMAIL
-            ]
-          }).then(
-            response => {
-              callBack(response); //Display response
-            },
-            error => {
-              callBack(error); //Display error
-            }
-          );
-        }}
-      />
-    );
-  } else {
-    return null;
-  }
+const onLoginPress = (onResult, onError) => async () => {
+  await AppleSignIn.requestAsync({
+    requestedScopes: [AppleSignIn.Scope.FULL_NAME, AppleSignIn.Scope.EMAIL]
+  }).then(onResult, onError);
 };
 
-export const SignInWithAppleButton2 = (buttonStyle, type, callBack) => {
+export const SignInWithAppleWhiteButton = ({
+  style,
+  cornerRadius,
+  onResult,
+  onError
+}) => {
   if (IS_SUPPORTED) {
     return (
-      <RNSignInWithAppleButton
-        type={type}
-        style={buttonStyle}
-        onPress={async () => {
-          await AppleSignIn.requestAsync({
-            requestedScopes: [
-              AppleSignIn.Scope.FULL_NAME,
-              AppleSignIn.Scope.EMAIL
-            ]
-          }).then(
-            response => {
-              callBack(response); //Display response
-            },
-            error => {
-              callBack(error); //Display error
-            }
-          );
-        }}
+      <RCSignInWithAppleWhiteButton
+        style={style}
+        cornerRadius={cornerRadius}
+        onPress={onLoginPress(onResult, onError)}
       />
     );
-  } else {
-    return null;
   }
+
+  return null;
+};
+
+export const SignInWithAppleWhiteOutlineButton = ({
+  style,
+  cornerRadius,
+  onResult,
+  onError
+}) => {
+  if (IS_SUPPORTED) {
+    return (
+      <RCSignInWithAppleWhiteOutlineButton
+        style={style}
+        cornerRadius={cornerRadius}
+        onPress={onLoginPress(onResult, onError)}
+      />
+    );
+  }
+
+  return null;
+};
+
+export const SignInWithAppleBlackButton = ({
+  style,
+  cornerRadius,
+  onResult,
+  onError
+}) => {
+  if (IS_SUPPORTED) {
+    return (
+      <RCSignInWithAppleBlackButton
+        style={style}
+        cornerRadius={cornerRadius}
+        onPress={onLoginPress(onResult, onError)}
+      />
+    );
+  }
+
+  return null;
 };
 
 export const Scope = {

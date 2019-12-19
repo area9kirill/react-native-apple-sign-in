@@ -3,23 +3,51 @@
 #import "RNCSignInWithAppleButton.h"
 @import AuthenticationServices;
 
-@interface RNCSignInWithAppleButtonManager : RCTViewManager
+#define EX_REGISTER_APPLE_AUTH_VIEW_MANAGER(style) \
+@interface RNCSignInWithAppleButton ## style ## Manager : RCTViewManager @end \
+\
+@implementation RNCSignInWithAppleButton ## style ## Manager \
+\
+  RCT_EXPORT_MODULE(RNCSignInWithAppleButton ## style ## Manager) \
+\ 
+  RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock) \
+\ 
+  RCT_CUSTOM_VIEW_PROPERTY(cornerRadius, NSNumber *, RNCSignInWithAppleButton) { if (@available(iOS 13.0, *)) { view.cornerRadius = [json floatValue]; } } \
+\ 
+- (UIView *)view { if (@available(iOS 13.0, *)) { return [[RNCSignInWithAppleButton alloc] initWithAuthorizationButtonType:ASAuthorizationAppleIDButtonTypeDefault authorizationButtonStyle:ASAuthorizationAppleIDButtonStyle ## style]; } return nil; } \
+\
 @end
 
-@implementation RNCSignInWithAppleButtonManager
+# pragma mark - SignIn White
 
-RCT_EXPORT_MODULE(RNCSignInWithAppleButtonManager)
+EX_REGISTER_APPLE_AUTH_VIEW_MANAGER(White)
 
-RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
-RCT_EXPORT_VIEW_PROPERTY(type, NSInteger)
+# pragma mark - SignIn WhiteOutline
 
-- (UIView *)view
-{
-    if (@available(iOS 13.0, *)) {
-        NSInteger *type = self.type ? self.type : ASAuthorizationAppleIDButtonStyleBlack;
-        return [[RNCSignInWithAppleButton alloc] initWithAuthorizationButtonType:ASAuthorizationAppleIDButtonTypeDefault authorizationButtonStyle:type];
-    }
-    return nil;
-}
+EX_REGISTER_APPLE_AUTH_VIEW_MANAGER(WhiteOutline)
 
-@end
+# pragma mark - SignIn Black
+
+EX_REGISTER_APPLE_AUTH_VIEW_MANAGER(Black)
+
+// original code
+// @interface RNCSignInWithAppleButtonManager : RCTViewManager
+// @end
+
+// @implementation RNCSignInWithAppleButtonManager
+
+// RCT_EXPORT_MODULE(RNCSignInWithAppleButtonManager)
+
+// RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
+// RCT_EXPORT_VIEW_PROPERTY(type, NSInteger)
+
+// - (UIView *)view
+// {
+//     if (@available(iOS 13.0, *)) {
+//         NSInteger *type = self.type ? self.type : ASAuthorizationAppleIDButtonStyleBlack;
+//         return [[RNCSignInWithAppleButton alloc] initWithAuthorizationButtonType:ASAuthorizationAppleIDButtonTypeDefault authorizationButtonStyle:type];
+//     }
+//     return nil;
+// }
+
+// @end
