@@ -33,7 +33,7 @@ export const SignInWithAppleWhiteButton = ({
 }) => {
   if (IS_SUPPORTED) {
     return (
-      <RCSignInWithAppleWhiteButton
+      <RNSignInWithAppleWhiteButton
         style={style}
         cornerRadius={cornerRadius}
         onPress={onLoginPress(onResult, onError)}
@@ -52,7 +52,7 @@ export const SignInWithAppleWhiteOutlineButton = ({
 }) => {
   if (IS_SUPPORTED) {
     return (
-      <RCSignInWithAppleWhiteOutlineButton
+      <RNSignInWithAppleWhiteOutlineButton
         style={style}
         cornerRadius={cornerRadius}
         onPress={onLoginPress(onResult, onError)}
@@ -71,7 +71,7 @@ export const SignInWithAppleBlackButton = ({
 }) => {
   if (IS_SUPPORTED) {
     return (
-      <RCSignInWithAppleBlackButton
+      <RNSignInWithAppleBlackButton
         style={style}
         cornerRadius={cornerRadius}
         onPress={onLoginPress(onResult, onError)}
