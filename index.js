@@ -87,10 +87,25 @@ export const Scope = {
   EMAIL: IS_SUPPORTED ? AppleSignIn.Scope.EMAIL : null
 };
 
-export const ButtonType = {
-  BLACK: IS_SUPPORTED ? AppleSignIn.ButtonTypes.BLACK : null,
-  WHITE: IS_SUPPORTED ? AppleSignIn.ButtonTypes.WHITE : null,
-  WHITE_OUTLINE: IS_SUPPORTED ? AppleSignIn.ButtonTypes.WHITE_OUTLINE : null
+export const Operation = {
+  LOGIN: IS_SUPPORTED ? AppleSignIn.Operation.LOGIN : null,
+  REFRESH: IS_SUPPORTED ? AppleSignIn.Operation.REFRESH : null,
+  LOGOUT: IS_SUPPORTED ? AppleSignIn.Operation.LOGOUT : null,
+  IMPLICIT: IS_SUPPORTED ? AppleSignIn.Operation.IMPLICIT : null
+};
+
+export const CredentialState = {
+  AUTHORIZED: IS_SUPPORTED ? AppleSignIn.CredentialState.AUTHORIZED : null,
+  REVOKED: IS_SUPPORTED ? AppleSignIn.CredentialState.REVOKED : null,
+  NOT_FOUND: IS_SUPPORTED ? AppleSignIn.CredentialState.NOT_FOUND : null
+};
+
+export const UserDetectionStatus = {
+  LIKELY_REAL: IS_SUPPORTED
+    ? AppleSignIn.UserDetectionStatus.LIKELY_REAL
+    : null,
+  UNKNOWN: IS_SUPPORTED ? AppleSignIn.UserDetectionStatus.UNKNOWN : null,
+  UNSUPPORTED: IS_SUPPORTED ? AppleSignIn.UserDetectionStatus.UNSUPPORTED : null
 };
 
 export default {
